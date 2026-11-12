@@ -1,0 +1,21 @@
+{
+  "name": "mohamed-tarek-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mohamed Tarek — Graphic Designer & UI/UX Designer Portfolio 2026",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "gsap": "^3.15.1",
+    "lenis": "^1.3.27",
+    "lucide-react": "^0.469.0",
+    "next": "^14.2.25",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
