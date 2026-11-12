@@ -171,6 +171,19 @@ export default function PricingPageView() {
               .filter(Boolean);
             const pkgWaHref = getPackageWhatsAppHref(pkgName);
 
+            const startingRaw = String(tx(pk.startingPrice) || '').trim();
+            const hasStarting = Boolean(startingRaw && !/^TODO:/i.test(startingRaw));
+            const displayPrice = hasStarting
+              ? lang === 'ar'
+                ? `تبدأ من ${startingRaw}`
+                : `Starting from ${startingRaw}`
+              : tx(pk.price) || (lang === 'ar' ? 'حسب المشروع' : 'Custom quote');
+
+            const deliveryRaw = String(tx(pk.deliveryTime) || '').trim();
+            const deliveryText = deliveryRaw && !/^TODO:/i.test(deliveryRaw) ? deliveryRaw : '';
+            const revisionsRaw = String(tx(pk.revisions) || '').trim();
+            const revisionsText = revisionsRaw && !/^TODO:/i.test(revisionsRaw) ? revisionsRaw : '';
+
             return (
               <article
                 key={i}
@@ -209,13 +222,32 @@ export default function PricingPageView() {
 
                 <div className="pk-p pp-quote-box">
                   <span className="pp-quote-kicker">{t('colPricingModel')}</span>
-                  <EditableText
-                    path={`site.packages.${i}.price`}
-                    value={pk.price}
-                    tag="b"
-                    singleLine
-                  />
+                  {editing ? (
+                    <EditableText
+                      path={`site.packages.${i}.price`}
+                      value={pk.price}
+                      tag="b"
+                      singleLine
+                    />
+                  ) : (
+                    <b>{displayPrice}</b>
+                  )}
                 </div>
+
+                {(deliveryText || revisionsText) && (
+                  <div className="pk-meta">
+                    {deliveryText && (
+                      <span>
+                        <small>{t('deliveryTimeLabel')}:</small> {deliveryText}
+                      </span>
+                    )}
+                    {revisionsText && (
+                      <span>
+                        <small>{t('revisionsLabel')}:</small> {revisionsText}
+                      </span>
+                    )}
+                  </div>
+                )}
 
                 <div className="pp-features-wrap">
                   <span className="sp-block-label">{t('colIncludedScope')}</span>

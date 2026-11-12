@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, FolderKanban, Layers } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { getActiveCategories } from '@/lib/categoryHelpers';
 import { EditableText, AnimatedWords } from './SharedUI';
 
 const SERVICE_ICONS = {
@@ -38,7 +39,11 @@ const SERVICE_ICONS = {
 export default function ExperienceTimeline() {
   const { site, projects, categories, lang, tx, t, editing } = usePortfolio();
 
-  const servicesList = site.services || [];
+  const rawServicesList = site.services || [];
+  const servicesList = editing
+    ? rawServicesList
+    : rawServicesList.filter((s) => s.enabled !== false);
+  const activeCategories = getActiveCategories(categories, projects);
   const processSteps = site.process || [];
 
   const folderMap = {
@@ -165,7 +170,7 @@ export default function ExperienceTimeline() {
           </h3>
 
           <div className="about-focus-grid">
-            {categories.map((cat, idx) => {
+            {activeCategories.map((cat, idx) => {
               const catProjects = projects.filter((p) => p.folderId === cat.id);
               const delivs =
                 (cat.deliverables && (cat.deliverables[lang] || cat.deliverables.en)) || [];

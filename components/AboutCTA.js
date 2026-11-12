@@ -4,10 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Folder } from 'lucide-react';
 import { usePortfolio, socHref } from '@/context/PortfolioContext';
+import { getActiveCategories } from '@/lib/categoryHelpers';
 import { EditableText, AnimatedWords, NetworkSvg, SocialLinksList } from './SharedUI';
 
 export default function AboutCTA() {
-  const { site, categories, tx, t, editing, waLink } = usePortfolio();
+  const { site, projects, categories, tx, t, editing, waLink } = usePortfolio();
+  const activeCategories = getActiveCategories(categories, projects);
 
   const socials = site.socials || [];
   const hasWa = socials.some((x) => x.id === 'whatsapp');
@@ -73,7 +75,7 @@ export default function AboutCTA() {
 
         {/* Direct Links to Project Folders */}
         <div className="about-cta-folders">
-          {categories.map((cat) => (
+          {activeCategories.map((cat) => (
             <Link key={cat.id} href={`/projects/${cat.slug}`} className="fchip">
               <Folder size={14} style={{ marginInlineEnd: '6px', verticalAlign: '-2px' }} />
               {tx(cat.shortTitle || cat.title)}

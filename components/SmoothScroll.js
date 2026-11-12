@@ -28,10 +28,11 @@ export default function SmoothScroll() {
         if (cancelled) return;
 
         lenis = new Lenis({
-          duration: 1.1,
+          duration: 0.88,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
-          wheelMultiplier: 0.88,
+          wheelMultiplier: 1.02,
+          touchMultiplier: 1.2,
           syncTouch: false,
           infinite: false
         });
@@ -46,7 +47,7 @@ export default function SmoothScroll() {
             }
           };
           gsapInstance.ticker.add(tickerFn);
-          gsapInstance.ticker.lagSmoothing(0);
+          gsapInstance.ticker.lagSmoothing(500, 33);
         } else {
           const step = (time) => {
             if (cancelled) return;

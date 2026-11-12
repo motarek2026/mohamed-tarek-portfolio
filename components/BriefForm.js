@@ -793,6 +793,26 @@ export default function BriefForm({ isStandalonePage = false }) {
                 <NetworkSvg id="whatsapp" />
                 <span>{t('prepareBriefBtn')}</span>
               </button>
+
+              {(() => {
+                const emailEntry = (site.socials || []).find(
+                  (s) => s.id === 'email' && s.value && s.value.trim()
+                );
+                const emailHref = emailEntry ? socHref('email', emailEntry.value) : '';
+                if (!emailHref) return null;
+                return (
+                  <p className="field-hint" style={{ marginTop: '12px', textAlign: 'center' }}>
+                    {lang === 'ar' ? 'أو راسلني مباشرة عبر البريد الإلكتروني: ' : 'Or email me directly at '}
+                    <a
+                      href={emailHref}
+                      dir="ltr"
+                      style={{ textDecoration: 'underline', fontWeight: 600 }}
+                    >
+                      {emailEntry.value.trim()}
+                    </a>
+                  </p>
+                );
+              })()}
             </form>
           )}
         </div>

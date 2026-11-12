@@ -4,10 +4,16 @@ export const INITIAL_PROJECTS = [
     slug: 'iphone-18-pro-max',
     folderId: 'social-media-campaigns',
     type: 'social',
+    projectType: 'concept',
     sub: '',
     color: '#7C3AED',
     year: '2026',
     featured: true,
+    role: {
+      en: 'Graphic Designer',
+      ar: 'مصمم جرافيك'
+    },
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
     title: {
       en: 'iPhone 18 Pro Max',
       ar: 'آيفون 18 برو ماكس'
@@ -20,10 +26,23 @@ export const INITIAL_PROJECTS = [
       en: 'Design a launch campaign for the iPhone 18 Pro Max that highlights its camera, display and design through bold, clean social media posts.',
       ar: 'تصميم حملة إطلاق لآيفون 18 برو ماكس تبرز الكاميرا والشاشة والتصميم عبر منشورات واضحة وجريئة لمنصات التواصل.'
     },
+    overview: {
+      en: 'Design a launch campaign for the iPhone 18 Pro Max that highlights its camera, display and design through bold, clean social media posts.',
+      ar: 'تصميم حملة إطلاق لآيفون 18 برو ماكس تبرز الكاميرا والشاشة والتصميم عبر منشورات واضحة وجريئة لمنصات التواصل.'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'Large product imagery, restrained type and one consistent grid, so each post reads on its own and works as part of the set.',
       ar: 'صور كبيرة للمنتج، وخطوط هادئة، وشبكة موحّدة تجعل كل منشور يُقرأ وحده ويعمل ضمن المجموعة.'
     },
+    approach: {
+      en: 'Large product imagery, restrained type and one consistent grid, so each post reads on its own and works as part of the set.',
+      ar: 'صور كبيرة للمنتج، وخطوط هادئة، وشبكة موحّدة تجعل كل منشور يُقرأ وحده ويعمل ضمن المجموعة.'
+    },
+    results: null,
     cols: 3,
     ratio: '3/4',
     align: 'start',
@@ -38,9 +57,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Launch campaign key visual highlighting camera and display',
+          ar: 'التصميم الرئيسي لحملة الإطلاق يبرز الكاميرا والشاشة'
+        },
         alt: {
-          en: 'iPhone 18 Pro Max — 01',
-          ar: 'آيفون 18 برو ماكس — 01'
+          en: 'iPhone 18 Pro Max — Launch campaign key visual',
+          ar: 'آيفون 18 برو ماكس — التصميم الرئيسي لحملة الإطلاق'
         }
       },
       {
@@ -115,10 +138,16 @@ export const INITIAL_PROJECTS = [
     slug: 'twist',
     folderId: 'social-media-campaigns',
     type: 'social',
+    projectType: 'concept',
     sub: '',
     color: '#0359D7',
     year: '2026',
     featured: false,
+    role: {
+      en: 'Graphic Designer',
+      ar: 'مصمم جرافيك'
+    },
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
     title: {
       en: 'Twist',
       ar: 'تويست'
@@ -131,10 +160,23 @@ export const INITIAL_PROJECTS = [
       en: 'Create a fresh, playful social media campaign for Twist, a blueberry drink, built around its colour and flavour.',
       ar: 'إنشاء حملة منعشة ومرحة لمشروب تويست بنكهة التوت الأزرق، قائمة على لون المنتج ونكهته.'
     },
+    overview: {
+      en: 'Create a fresh, playful social media campaign for Twist, a blueberry drink, built around its colour and flavour.',
+      ar: 'إنشاء حملة منعشة ومرحة لمشروب تويست بنكهة التوت الأزرق، قائمة على لون المنتج ونكهته.'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'Deep blueberry tones, splash and motion cues, and short, punchy headlines.',
       ar: 'درجات التوت الأزرق العميقة، ولمسات الرذاذ والحركة، وعناوين قصيرة ومباشرة.'
     },
+    approach: {
+      en: 'Deep blueberry tones, splash and motion cues, and short, punchy headlines.',
+      ar: 'درجات التوت الأزرق العميقة، ولمسات الرذاذ والحركة، وعناوين قصيرة ومباشرة.'
+    },
+    results: null,
     cols: 3,
     ratio: 'auto',
     align: 'start',
@@ -149,9 +191,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Blueberry drink campaign visual with splash and motion cues',
+          ar: 'تصميم حملة مشروب التوت الأزرق مع مؤثرات الرذاذ والحركة'
+        },
         alt: {
-          en: 'Twist — 01',
-          ar: 'تويست — 01'
+          en: 'Twist — Blueberry drink campaign visual',
+          ar: 'تويست — تصميم حملة مشروب التوت الأزرق'
         }
       },
       {
@@ -226,10 +272,16 @@ export const INITIAL_PROJECTS = [
     slug: 'saudi-national-day-96',
     folderId: 'social-media-campaigns',
     type: 'social',
+    projectType: 'concept',
     sub: '',
     color: '#C026D3',
     year: '2026',
     featured: true,
+    role: {
+      en: 'Graphic Designer',
+      ar: 'مصمم جرافيك'
+    },
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
     title: {
       en: 'Saudi National Day 96',
       ar: 'اليوم الوطني السعودي 96'
@@ -242,10 +294,23 @@ export const INITIAL_PROJECTS = [
       en: 'A set of posters celebrating Saudi National Day 96 with a clear, consistent visual style.',
       ar: 'مجموعة بوسترات تحتفي باليوم الوطني السعودي 96 بأسلوب بصري واضح ومتماسك.'
     },
+    overview: {
+      en: 'A set of posters celebrating Saudi National Day 96 with a clear, consistent visual style.',
+      ar: 'مجموعة بوسترات تحتفي باليوم الوطني السعودي 96 بأسلوب بصري واضح ومتماسك.'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'A green and white palette, strong Arabic typography and a balanced layout that suits every post.',
       ar: 'لوحة ألوان خضراء وبيضاء، وخط عربي قوي، وتكوين متوازن يناسب كل منشور.'
     },
+    approach: {
+      en: 'A green and white palette, strong Arabic typography and a balanced layout that suits every post.',
+      ar: 'لوحة ألوان خضراء وبيضاء، وخط عربي قوي، وتكوين متوازن يناسب كل منشور.'
+    },
+    results: null,
     cols: 3,
     ratio: '4/5',
     align: 'start',
@@ -260,9 +325,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Arabic typography poster in green and white palette',
+          ar: 'بوستر بالخط العربي ولوحة الألوان الخضراء والبيضاء'
+        },
         alt: {
-          en: 'Saudi National Day 96 — 01',
-          ar: 'اليوم الوطني السعودي 96 — 01'
+          en: 'Saudi National Day 96 — Arabic typography poster',
+          ar: 'اليوم الوطني السعودي 96 — بوستر بالخط العربي'
         }
       },
       {
@@ -337,10 +406,16 @@ export const INITIAL_PROJECTS = [
     slug: 'starville',
     folderId: 'product-advertising',
     type: 'social',
+    projectType: 'concept',
     sub: '',
     color: '#4F46E5',
     year: '2026',
-    featured: false,
+    featured: true,
+    role: {
+      en: 'Graphic Designer',
+      ar: 'مصمم جرافيك'
+    },
+    tools: ['Adobe Photoshop', 'Adobe Illustrator'],
     title: {
       en: 'StarVille',
       ar: 'ستار فيل'
@@ -353,10 +428,23 @@ export const INITIAL_PROJECTS = [
       en: 'Present the StarVille facial cleanser as clean, gentle and trustworthy through product-led posts.',
       ar: 'تقديم غسول الوجه StarVille كمنتج نظيف ولطيف وموثوق عبر منشورات تركّز على المنتج.'
     },
+    overview: {
+      en: 'Present the StarVille facial cleanser as clean, gentle and trustworthy through product-led posts.',
+      ar: 'تقديم غسول الوجه StarVille كمنتج نظيف ولطيف وموثوق عبر منشورات تركّز على المنتج.'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'Clean backgrounds, soft light and minimal text that leave room for the product.',
       ar: 'خلفيات نظيفة، وإضاءة ناعمة، ونصوص قليلة تترك المساحة للمنتج.'
     },
+    approach: {
+      en: 'Clean backgrounds, soft light and minimal text that leave room for the product.',
+      ar: 'خلفيات نظيفة، وإضاءة ناعمة، ونصوص قليلة تترك المساحة للمنتج.'
+    },
+    results: null,
     cols: 3,
     ratio: 'auto',
     align: 'start',
@@ -371,9 +459,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Product-led facial cleanser post on clean soft-lit background',
+          ar: 'منشور يبرز غسول الوجه على خلفية نظيفة بإضاءة ناعمة'
+        },
         alt: {
-          en: 'StarVille — 01',
-          ar: 'ستار فيل — 01'
+          en: 'StarVille — Product-led facial cleanser post',
+          ar: 'ستار فيل — منشور غسول الوجه'
         }
       },
       {
@@ -487,10 +579,16 @@ export const INITIAL_PROJECTS = [
     slug: 'istidama-website',
     folderId: 'website-ui-ux',
     type: 'uiux',
+    projectType: 'concept',
     sub: 'website',
     color: '#9333EA',
     year: '2026',
     featured: false,
+    role: {
+      en: 'UI/UX Designer',
+      ar: 'مصمم UI/UX'
+    },
+    tools: ['Figma'],
     title: {
       en: 'Istidama Website',
       ar: 'موقع استدامة'
@@ -503,10 +601,27 @@ export const INITIAL_PROJECTS = [
       en: 'Design the website for Istidama, a sustainability company, across three pages: Home, Our Services and About Us.',
       ar: 'تصميم موقع شركة استدامة المتخصصة في الاستدامة عبر ثلاث صفحات: الرئيسية، خدماتنا، من نحن.'
     },
+    overview: {
+      en: 'Design the website for Istidama, a sustainability company, across three pages: Home, Our Services and About Us.',
+      ar: 'تصميم موقع شركة استدامة المتخصصة في الاستدامة عبر ثلاث صفحات: الرئيسية، خدماتنا، من نحن.'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'Add your design decisions here: layout, colours, type and how the pages guide visitors.',
       ar: 'أضف قرارات التصميم هنا: التخطيط، الألوان، الخطوط، وكيف توجّه الصفحات الزائر.'
     },
+    approach: {
+      en: 'TODO: write your approach / process',
+      ar: 'TODO: اكتب منهجية التصميم وخطوات العمل'
+    },
+    results: null,
+    wireframes: [],
+    userFlow: null,
+    designSystem: null,
+    prototypeUrl: '',
     cols: 3,
     ratio: 'auto',
     align: 'start',
@@ -521,9 +636,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Sustainability company website UI/UX layout showcase',
+          ar: 'عرض تصميم واجهات موقع شركة استدامة'
+        },
         alt: {
-          en: 'Istidama Website — 01',
-          ar: 'موقع استدامة — 01'
+          en: 'Istidama Website — UI/UX layout showcase',
+          ar: 'موقع استدامة — عرض تصميم الواجهات'
         }
       },
       {
@@ -572,10 +691,16 @@ export const INITIAL_PROJECTS = [
     slug: 'recruitment-website',
     folderId: 'website-ui-ux',
     type: 'uiux',
+    projectType: 'concept',
     sub: 'website',
     color: '#2563EB',
     year: '2026',
     featured: false,
+    role: {
+      en: 'UI/UX Designer',
+      ar: 'مصمم UI/UX'
+    },
+    tools: ['Figma'],
     title: {
       en: 'Recruitment Website',
       ar: 'موقع استقدام'
@@ -588,10 +713,27 @@ export const INITIAL_PROJECTS = [
       en: 'Design an Arabic-first, right-to-left recruitment website with three pages: Home, About Us and Our Services, built around the line “نربط الأشخاص. نصنع الفرص.”',
       ar: 'تصميم موقع استقدام عربي بالكامل من اليمين لليسار بثلاث صفحات: الرئيسية، من نحن، خدماتنا، قائم على شعار «نربط الأشخاص. نصنع الفرص.»'
     },
+    overview: {
+      en: 'Design an Arabic-first, right-to-left recruitment website with three pages: Home, About Us and Our Services, built around the line “نربط الأشخاص. نصنع الفرص.”',
+      ar: 'تصميم موقع استقدام عربي بالكامل من اليمين لليسار بثلاث صفحات: الرئيسية، من نحن، خدماتنا، قائم على شعار «نربط الأشخاص. نصنع الفرص.»'
+    },
+    challenge: {
+      en: 'TODO: write the challenge',
+      ar: 'TODO: اكتب التحدي لهذا المشروع'
+    },
     decision: {
       en: 'Add your design decisions here: layout, colours, type and how the pages guide visitors.',
       ar: 'أضف قرارات التصميم هنا: التخطيط، الألوان، الخطوط، وكيف توجّه الصفحات الزائر.'
     },
+    approach: {
+      en: 'TODO: write your approach / process',
+      ar: 'TODO: اكتب منهجية التصميم وخطوات العمل'
+    },
+    results: null,
+    wireframes: [],
+    userFlow: null,
+    designSystem: null,
+    prototypeUrl: '',
     cols: 3,
     ratio: 'auto',
     align: 'start',
@@ -606,9 +748,13 @@ export const INITIAL_PROJECTS = [
         cs: 1,
         ratio: 'inherit',
         fit: 'cover',
+        caption: {
+          en: 'Arabic RTL recruitment website UI/UX layout showcase',
+          ar: 'عرض تصميم واجهات موقع الاستقدام العربي RTL'
+        },
         alt: {
-          en: 'Recruitment Website — 01',
-          ar: 'موقع استقدام — 01'
+          en: 'Recruitment Website — Arabic RTL UI/UX layout showcase',
+          ar: 'موقع استقدام — عرض تصميم الواجهات العربي RTL'
         }
       },
       {

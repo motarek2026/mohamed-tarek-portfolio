@@ -7,6 +7,10 @@ export const INITIAL_SITE_DATA = {
     en: 'Graphic Designer & UI/UX Designer',
     ar: 'مصمم جرافيك و UI/UX'
   },
+  positioning: {
+    en: 'TODO: I help [audience] with [outcome] through [services]',
+    ar: 'TODO: أساعد [الجمهور] على تحقيق [النتيجة] من خلال [الخدمات]'
+  },
   avail: {
     en: 'Available for freelance · 2026',
     ar: 'متاح لمشاريع الفريلانس · 2026'
@@ -98,6 +102,7 @@ export const INITIAL_SITE_DATA = {
     { kind: 'tools', label: { en: 'Design tools', ar: 'أداة تصميم' } },
     { kind: 'clients', label: { en: 'Clients', ar: 'عميل' } }
   ],
+  // Optional client logos: [{ name: { en, ar } | string, logo: '/images/clients/...', url?: 'https://...' }]
   clients: [],
   services: [
     {
@@ -129,6 +134,7 @@ export const INITIAL_SITE_DATA = {
     },
     {
       icon: 'video',
+      enabled: false, // Set to true to re-enable the Video & Motion service card
       title: { en: 'Video & Motion', ar: 'فيديو وموشن' },
       desc: {
         en: 'Short edits and motion for reels, ads and product launches.',
@@ -146,6 +152,9 @@ export const INITIAL_SITE_DATA = {
         ar: 'مجموعة بوستات وستوريز متناسقة لحملتك.'
       },
       price: { en: 'Custom quote', ar: 'حسب المشروع' },
+      startingPrice: { en: 'TODO: [price]', ar: 'TODO: [السعر]' },
+      deliveryTime: { en: 'TODO: [delivery time]', ar: 'TODO: [مدة التنفيذ]' },
+      revisions: { en: 'TODO: [revision rounds]', ar: 'TODO: [عدد التعديلات]' },
       features: {
         en: 'Concept & visual direction\nPost & story designs\nSource & export files\nFeedback rounds included',
         ar: 'فكرة واتجاه بصري\nتصميم بوستات وستوريز\nملفات مفتوحة وجاهزة للنشر\nجولات تعديل متضمنة'
@@ -159,6 +168,9 @@ export const INITIAL_SITE_DATA = {
         ar: 'شعار وهوية بصرية تفضل في الذاكرة.'
       },
       price: { en: 'Custom quote', ar: 'حسب المشروع' },
+      startingPrice: { en: 'TODO: [price]', ar: 'TODO: [السعر]' },
+      deliveryTime: { en: 'TODO: [delivery time]', ar: 'TODO: [مدة التنفيذ]' },
+      revisions: { en: 'TODO: [revision rounds]', ar: 'TODO: [عدد التعديلات]' },
       features: {
         en: 'Logo design\nColours & typography\nBrand guidelines\nSource & export files',
         ar: 'تصميم الشعار\nالألوان والخطوط\nدليل استخدام الهوية\nملفات مفتوحة وجاهزة'
@@ -172,6 +184,9 @@ export const INITIAL_SITE_DATA = {
         ar: 'مواقع أو تطبيقات أو داشبورد مصممة حسب مستخدميك.'
       },
       price: { en: 'Custom quote', ar: 'حسب المشروع' },
+      startingPrice: { en: 'TODO: [price]', ar: 'TODO: [السعر]' },
+      deliveryTime: { en: 'TODO: [delivery time]', ar: 'TODO: [مدة التنفيذ]' },
+      revisions: { en: 'TODO: [revision rounds]', ar: 'TODO: [عدد التعديلات]' },
       features: {
         en: 'User flow & wireframes\nHigh-fidelity screens in Figma\nResponsive layouts\nDeveloper-ready handoff',
         ar: 'مسار المستخدم والوايرفريم\nشاشات نهائية على فيجما\nتصميم متجاوب\nتسليم جاهز للمطورين'

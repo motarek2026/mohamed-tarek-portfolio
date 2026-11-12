@@ -48,14 +48,16 @@ export default function HeroPortrait() {
           <div className="hx-title-shell hx-stagger" style={{ '--hx-i': 1 }}>
             <KineticName
               text={tx(site.name)}
-              prefix={isAr ? 'أنا' : 'I’m'}
               lang={lang}
               services={tags}
             />
           </div>
 
           <p className="hx-role hx-stagger" style={{ '--hx-i': 2 }}>
-            {tx(site.role)}
+            {(() => {
+              const pos = String(tx(site.positioning) || '').trim();
+              return pos && !/^TODO:/i.test(pos) ? pos : tx(site.role);
+            })()}
           </p>
         </div>
 
@@ -66,18 +68,27 @@ export default function HeroPortrait() {
               <div className="hx-block">
                 <span className="hx-label">{isAr ? 'تابعني على' : 'Follow me on'}</span>
                 <div className="hx-socials">
-                  {socials.map((s) => (
-                    <a
-                      key={s.id}
-                      className="hx-soc"
-                      href={socHref(s.id, s.value)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.id}
-                    >
-                      <NetworkSvg id={s.id} />
-                    </a>
-                  ))}
+                  {socials.map((s) => {
+                    const labelMap = {
+                      instagram: 'Instagram',
+                      behance: 'Behance',
+                      facebook: 'Facebook',
+                      tiktok: 'TikTok',
+                      linkedin: 'LinkedIn'
+                    };
+                    return (
+                      <a
+                        key={s.id}
+                        className="hx-soc"
+                        href={socHref(s.id, s.value)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={labelMap[s.id] || s.id}
+                      >
+                        <NetworkSvg id={s.id} />
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -102,8 +113,8 @@ export default function HeroPortrait() {
                   alt={tx(site.name)}
                   width={576}
                   height={1024}
-                  sizes="(max-width: 768px) 78vw, 390px"
-                  quality={88}
+                  sizes="(max-width: 768px) 72vw, 380px"
+                  quality={78}
                   priority
                 />
               </div>

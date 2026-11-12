@@ -73,7 +73,10 @@ export default function ServicesPageView() {
     setPreselectedService
   } = usePortfolio();
 
-  const services = site.services || [];
+  const rawServices = site.services || [];
+  const services = editing
+    ? rawServices
+    : rawServices.filter((svc) => svc.enabled !== false);
   const BackIcon = lang === 'ar' ? ArrowRight : ArrowLeft;
 
   const baseWa = waBase();
@@ -110,7 +113,7 @@ export default function ServicesPageView() {
       const extraDeliv = (cat?.deliverables?.[lang] || cat?.deliverables?.en || []);
       return {
         color: '#7C3AED',
-        folderHref: '/projects/social-media-campaigns',
+        folderHref: relProjects.length > 0 ? '/projects/social-media-campaigns' : null,
         folderLabel: tx(cat?.title) || t('openFolder'),
         relatedProjects: relProjects,
         extraDeliverables: extraDeliv
@@ -123,7 +126,7 @@ export default function ServicesPageView() {
       const extraDeliv = (cat?.deliverables?.[lang] || cat?.deliverables?.en || []);
       return {
         color: '#4F46E5',
-        folderHref: '/projects/branding-identity',
+        folderHref: relProjects.length > 0 ? '/projects/branding-identity' : null,
         folderLabel: tx(cat?.title) || t('openFolder'),
         relatedProjects: relProjects,
         extraDeliverables: extraDeliv
@@ -136,7 +139,7 @@ export default function ServicesPageView() {
       const extraDeliv = (cat?.deliverables?.[lang] || cat?.deliverables?.en || []);
       return {
         color: '#C026D3',
-        folderHref: '/projects/website-ui-ux',
+        folderHref: relProjects.length > 0 ? '/projects/website-ui-ux' : null,
         folderLabel: tx(cat?.title) || t('openFolder'),
         relatedProjects: relProjects,
         extraDeliverables: extraDeliv
@@ -394,11 +397,14 @@ export default function ServicesPageView() {
                       })}
                     </div>
                   ) : (
-                    <Link href={meta.folderHref} className="sp-destination-card">
+                    <Link
+                      href={meta.folderHref || '/start-project'}
+                      className="sp-destination-card"
+                    >
                       <div className="sp-dest-top">
                         <span className="sp-dest-badge">
                           <FolderOpen size={15} />
-                          <span>{meta.folderLabel}</span>
+                          <span>{meta.folderHref ? meta.folderLabel : t('startProject')}</span>
                         </span>
                         <span className="folder-route-link">
                           <ArrowUpRight size={18} />

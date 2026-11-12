@@ -39,12 +39,64 @@ export default function Header() {
   const isPricing = pathname === '/pricing';
   const [activeSection, setActiveSection] = useState('#top');
   const navRef = useRef(null);
+  const mnavRef = useRef(null);
+  const burgerRef = useRef(null);
   const [pillStyle, setPillStyle] = useState({ opacity: 0 });
 
   // Close mobile menu when route changes
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname, setMenuOpen]);
+
+  // Mobile menu keyboard accessibility: Escape to close + focus trap + restore focus to burger
+  useEffect(() => {
+    if (!menuOpen) return;
+    const mnav = mnavRef.current;
+    const burger = burgerRef.current;
+    if (!mnav) return;
+
+    const getFocusable = () =>
+      Array.from(
+        mnav.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => el.offsetParent !== null);
+
+    const focusTimer = setTimeout(() => {
+      const items = getFocusable();
+      if (items[0]) items[0].focus();
+    }, 30);
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setMenuOpen(false);
+        if (burger && typeof burger.focus === 'function') {
+          burger.focus();
+        }
+        return;
+      }
+      if (e.key === 'Tab') {
+        const items = getFocusable();
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      clearTimeout(focusTimer);
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [menuOpen, setMenuOpen]);
 
   // Smooth scroll to hash when arriving on home page from a standalone project/folder route
   useEffect(() => {
@@ -145,7 +197,7 @@ export default function Header() {
       key: 'work',
       label: t('projectsNav'),
       sectionId: 'work',
-      href: isHome ? '#work' : '/#work'
+      href: '/projects'
     },
     {
       key: 'services',
@@ -212,7 +264,8 @@ export default function Header() {
       item.key === 'about' ||
       item.key === 'creative-lab' ||
       item.key === 'services' ||
-      item.key === 'pricing'
+      item.key === 'pricing' ||
+      item.key === 'work'
     ) {
       return;
     }
@@ -291,7 +344,7 @@ export default function Header() {
   return (
     <>
       <header id="header">
-        <a className="skip" href={isHome ? '#about' : isAbout ? '#about-top' : '#folder-main'}>
+        <a className="skip" href="#app">
           {t('skip')}
         </a>
 
@@ -427,6 +480,7 @@ export default function Header() {
           </Link>
 
           <button
+            ref={burgerRef}
             type="button"
             className="burger"
             aria-label={t('menu')}
@@ -440,7 +494,16 @@ export default function Header() {
         </div>
       </header>
 
-      <div id="mnav" className="mnav" aria-hidden={!menuOpen}>
+      <div
+        id="mnav"
+        ref={mnavRef}
+        className="mnav"
+        role="dialog"
+        aria-modal={menuOpen ? 'true' : undefined}
+        aria-label={t('menu')}
+        aria-hidden={!menuOpen}
+        inert={!menuOpen ? '' : undefined}
+      >
         <nav aria-label="Mobile Navigation">
           {mobileNavItems.map((item, i) => {
             const active = isNavItemActive(item);

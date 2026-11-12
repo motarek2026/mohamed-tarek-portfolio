@@ -9,20 +9,23 @@ export default function IntroOverlay() {
   const [removed, setRemoved] = useState(false);
 
   const finishIntro = useCallback(() => {
+    try {
+      sessionStorage.setItem('mt_intro_seen', '1');
+    } catch {}
     setExiting((prev) => {
       if (prev) return prev;
       document.body.classList.remove('introing');
       document.body.classList.add('go');
       setTimeout(() => {
         document.body.classList.add('settled');
-      }, 3600);
+      }, 1200);
       setTimeout(() => {
         document.body.classList.add('written');
-      }, 4600);
+      }, 1800);
       setTimeout(() => {
         setRemoved(true);
         setIntroDone(true);
-      }, 780);
+      }, 500);
       return true;
     });
   }, [setIntroDone]);
@@ -30,7 +33,12 @@ export default function IntroOverlay() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce || introDone) {
+    let seen = false;
+    try {
+      seen = Boolean(sessionStorage.getItem('mt_intro_seen'));
+    } catch {}
+
+    if (reduce || introDone || seen) {
       setRemoved(true);
       setIntroDone(true);
       document.body.classList.add('go', 'settled', 'written');
@@ -44,7 +52,7 @@ export default function IntroOverlay() {
       }
     };
     window.addEventListener('keydown', onKey);
-    const timer = setTimeout(finishIntro, 950);
+    const timer = setTimeout(finishIntro, 650);
     return () => {
       window.removeEventListener('keydown', onKey);
       clearTimeout(timer);

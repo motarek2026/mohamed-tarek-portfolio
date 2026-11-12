@@ -85,13 +85,19 @@ export default function Testimonials() {
                     className="tm-n"
                     singleLine
                   />
-                  <EditableText
-                    path={`site.testimonials.${i}.role`}
-                    value={s.role}
-                    tag="span"
-                    className="tm-r"
-                    singleLine
-                  />
+                  {editing ? (
+                    <EditableText
+                      path={`site.testimonials.${i}.role`}
+                      value={s.role}
+                      tag="span"
+                      className="tm-r"
+                      singleLine
+                    />
+                  ) : (
+                    <span className="tm-r">
+                      {[tx(s.role), tx(s.company)].filter(Boolean).join(' · ')}
+                    </span>
+                  )}
                 </span>
               </figcaption>
 

@@ -7,6 +7,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { usePortfolio, parseVideoLink } from '@/context/PortfolioContext';
 import { ASPECT_RATIOS } from '@/data/projects';
 import { PROJECT_TYPES, UIUX_SUBTYPES } from '@/data/categories';
+import { BLUR_DATA_URL } from '@/lib/imageHelpers';
 import { EditableText } from './SharedUI';
 
 function pad(n) {
@@ -665,30 +666,44 @@ function GalleryMediaSlot({
               fixed ? (
                 <Image
                   src={it.src}
-                  alt={tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`}
+                  alt={
+                    tx(it.caption)
+                      ? `${projectTitle} — ${tx(it.caption)}`
+                      : tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`
+                  }
                   fill
-                  sizes="(max-width: 480px) 95vw, (max-width: 760px) 48vw, 380px"
-                  quality={90}
-                  priority={isFirstPageImage}
-                  loading={isFirstPageImage ? undefined : 'lazy'}
+                  sizes="(max-width: 480px) 92vw, (max-width: 760px) 46vw, 360px"
+                  quality={78}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               ) : (
                 <Image
                   src={it.src}
-                  alt={tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`}
+                  alt={
+                    tx(it.caption)
+                      ? `${projectTitle} — ${tx(it.caption)}`
+                      : tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`
+                  }
                   width={it.width || 1080}
                   height={it.height || 1350}
-                  sizes="(max-width: 480px) 95vw, (max-width: 760px) 48vw, 380px"
-                  quality={90}
-                  priority={isFirstPageImage}
-                  loading={isFirstPageImage ? undefined : 'lazy'}
+                  sizes="(max-width: 480px) 92vw, (max-width: 760px) 46vw, 360px"
+                  quality={78}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
                 />
               )
             ) : (
               <img
                 src={it.src}
-                alt={tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`}
-                loading={isFirstPageImage ? 'eager' : 'lazy'}
+                alt={
+                    tx(it.caption)
+                      ? `${projectTitle} — ${tx(it.caption)}`
+                      : tx(it.alt) || `${projectTitle} — ${pad(k + 1)}`
+                }
+                loading="lazy"
                 decoding="async"
               />
             )}

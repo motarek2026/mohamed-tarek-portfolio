@@ -199,7 +199,7 @@ export default function FloatingControls() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="WhatsApp"
+              aria-label={t('waTip') || 'Chat on WhatsApp'}
             >
               <NetworkSvg id="whatsapp" />
               <span className="tip">{t('waTip')}</span>

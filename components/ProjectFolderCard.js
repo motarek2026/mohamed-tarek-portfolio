@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Folder, FolderOpen, ArrowUpRight, Layers, Sparkles } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { BLUR_DATA_URL } from '@/lib/imageHelpers';
 
 function ProjectFolderCard({
   folder,
@@ -150,8 +151,11 @@ function ProjectFolderCard({
                     src={img.src}
                     alt={tx(img.alt) || tx(folder.title)}
                     fill
-                    sizes="(max-width: 720px) 75vw, (max-width: 1024px) 40vw, 280px"
-                    quality={85}
+                    sizes="(max-width: 720px) 72vw, (max-width: 1024px) 38vw, 260px"
+                    quality={75}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
                   />
                 ) : (
                   <img

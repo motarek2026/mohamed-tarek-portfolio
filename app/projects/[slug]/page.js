@@ -1,62 +1,77 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 import { getCategories, getProjects, isPreviewAuthorized } from '@/lib/content';
+import { getActiveCategories } from '@/lib/categoryHelpers';
+import {
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+  buildAlternates,
+  toRelativeOrExternalUrl,
+  cleanProjectDescription,
+  buildCreativeWorkJsonLd
+} from '@/lib/seo';
 import ProjectFolderView from '@/components/ProjectFolderView';
 import ProjectCaseStudyView from '@/components/ProjectCaseStudyView';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-
-function cleanDecisionText(text) {
-  if (!text) return '';
-  const trimmed = text.trim();
-  if (
-    /^add your design decisions here/i.test(trimmed) ||
-    /^أضف قرارات التصميم هنا/.test(trimmed)
-  ) {
-    return '';
-  }
-  return trimmed;
-}
 
 export async function generateStaticParams() {
   const [categories, projects] = await Promise.all([
     getCategories(),
     getProjects()
   ]);
-  const categorySlugs = categories.map((c) => ({ slug: c.slug }));
+  const activeCategories = getActiveCategories(categories, projects);
+  const categorySlugs = activeCategories.map((c) => ({ slug: c.slug }));
   const projectSlugs = projects.map((p) => ({ slug: p.slug || p.id }));
   return [...categorySlugs, ...projectSlugs];
 }
 
 export async function generateMetadata({ params, searchParams }) {
   const slug = params?.slug || '';
+  const isAr = searchParams?.lang === 'ar';
+  const locale = isAr ? 'ar_EG' : 'en_US';
+  const alternateLocale = [isAr ? 'en_US' : 'ar_EG'];
   const isPreview = isPreviewAuthorized(searchParams?.preview);
   const [categories, projects] = await Promise.all([
     getCategories(),
     getProjects({ isDraft: isPreview })
   ]);
 
-  const matchedCategory = categories.find((c) => c.slug === slug || c.id === slug);
+  const activeCategories = getActiveCategories(categories, projects);
+  const matchedCategory = activeCategories.find((c) => c.slug === slug || c.id === slug);
   const matchedProject = projects.find((p) => p.slug === slug || p.id === slug);
 
   if (matchedCategory) {
-    const title = `${matchedCategory.title.en} (${matchedCategory.title.ar})`;
-    const description = matchedCategory.description.en;
+    const catTitle = isAr
+      ? matchedCategory.title.ar || matchedCategory.title.en
+      : matchedCategory.title.en;
+    const description = isAr
+      ? matchedCategory.description.ar || matchedCategory.description.en
+      : matchedCategory.description.en;
     const categoryProjects = projects.filter((p) => p.folderId === matchedCategory.id);
     const firstWithThumb = categoryProjects.find((p) => p.thumbnail);
-    const ogImage = firstWithThumb ? firstWithThumb.thumbnail : '/projects/iphone-18-pro-max/01.jpg';
+    const ogImage = firstWithThumb
+      ? toRelativeOrExternalUrl(firstWithThumb.thumbnail)
+      : DEFAULT_OG_IMAGE;
+    const canonicalPath = `/projects/${matchedCategory.slug}`;
 
     return {
-      title,
+      title: `${matchedCategory.title.en} (${matchedCategory.title.ar})`,
       description,
+      alternates: buildAlternates(canonicalPath),
       openGraph: {
-        title: `${matchedCategory.title.en} — Mohamed Tarek · Portfolio 2026`,
+        title: `${catTitle} — ${SITE_NAME}`,
         description,
+        url: canonicalPath,
         type: 'website',
-        images: [{ url: ogImage, alt: matchedCategory.title.en }]
+        locale,
+        alternateLocale,
+        siteName: SITE_NAME,
+        images: [{ url: ogImage, alt: catTitle }]
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${matchedCategory.title.en} — Mohamed Tarek · Portfolio 2026`,
+        title: `${catTitle} — ${SITE_NAME}`,
         description,
         images: [ogImage]
       }
@@ -64,24 +79,36 @@ export async function generateMetadata({ params, searchParams }) {
   }
 
   if (matchedProject) {
-    const title = `${matchedProject.title.en} — ${matchedProject.cat.en}`;
-    const goalText = (matchedProject.goal?.en || '').trim();
-    const decisionText = cleanDecisionText(matchedProject.decision?.en);
-    const description = [goalText, decisionText].filter(Boolean).join(' ').trim();
-    const ogImage = matchedProject.thumbnail || '/projects/iphone-18-pro-max/01.jpg';
+    const projTitle = isAr
+      ? matchedProject.title.ar || matchedProject.title.en
+      : matchedProject.title.en;
+    const projCat = isAr
+      ? matchedProject.cat.ar || matchedProject.cat.en
+      : matchedProject.cat.en;
+    const title = `${projTitle} — ${projCat}`;
+    const description = cleanProjectDescription(matchedProject, isAr ? 'ar' : 'en');
+    const ogImage = toRelativeOrExternalUrl(matchedProject.thumbnail);
+    const canonicalPath = `/projects/${matchedProject.folderId}/${
+      matchedProject.slug || matchedProject.id
+    }`;
 
     return {
       title,
       description,
+      alternates: buildAlternates(canonicalPath),
       openGraph: {
-        title: `${matchedProject.title.en} — Mohamed Tarek · Portfolio 2026`,
+        title: `${projTitle} — ${SITE_NAME}`,
         description,
+        url: canonicalPath,
         type: 'article',
-        images: [{ url: ogImage, alt: matchedProject.title.en }]
+        locale,
+        alternateLocale,
+        siteName: SITE_NAME,
+        images: [{ url: ogImage, alt: projTitle }]
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${matchedProject.title.en} — Mohamed Tarek · Portfolio 2026`,
+        title: `${projTitle} — ${SITE_NAME}`,
         description,
         images: [ogImage]
       }
@@ -90,15 +117,35 @@ export async function generateMetadata({ params, searchParams }) {
 
   return {
     title: 'Project Folder',
-    description: 'Selected design work by Mohamed Tarek — Graphic Designer & UI/UX Designer.'
+    description: 'Selected design work by Mohamed Tarek — Graphic Designer & UI/UX Designer.',
+    alternates: buildAlternates(`/projects/${slug}`)
   };
 }
 
 export default async function ProjectFolderPage({ params, searchParams }) {
   const slug = params?.slug || '';
   const isPreview = isPreviewAuthorized(searchParams?.preview);
-  const projects = await getProjects({ isDraft: isPreview });
+  const [categories, projects] = await Promise.all([
+    getCategories(),
+    getProjects({ isDraft: isPreview })
+  ]);
+  const activeCategories = getActiveCategories(categories, projects);
   const matchedProject = projects.find((p) => p.slug === slug || p.id === slug);
+  const matchedCategory = matchedProject
+    ? categories.find((c) => c.id === matchedProject.folderId || c.slug === matchedProject.folderId)
+    : activeCategories.find((c) => c.slug === slug || c.id === slug);
+
+  if (!matchedProject && !matchedCategory) {
+    notFound();
+  }
+
+  const creativeWorkJsonLd = matchedProject
+    ? buildCreativeWorkJsonLd(
+        matchedProject,
+        matchedCategory,
+        `/projects/${matchedProject.folderId}/${matchedProject.slug || matchedProject.id}`
+      )
+    : null;
 
   return (
     <main
@@ -107,6 +154,12 @@ export default async function ProjectFolderPage({ params, searchParams }) {
         matchedProject ? 'standalone-case-study-page' : ''
       }`.trim()}
     >
+      {creativeWorkJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
+        />
+      )}
       {matchedProject ? (
         <ProjectCaseStudyView
           categorySlug={matchedProject.folderId}

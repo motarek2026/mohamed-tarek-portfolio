@@ -194,7 +194,22 @@ export default function PointerFX() {
           '.case-study-view .slot:not(.empty):not(.txt) .ti, .folder-view-container .slot:not(.empty):not(.txt) .ti'
         )
       );
+      parallaxSlots.forEach((slot) => slotObserver.observe(slot));
     };
+
+    const visibleSlots = new Set();
+    const slotObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            visibleSlots.add(en.target);
+          } else {
+            visibleSlots.delete(en.target);
+          }
+        });
+      },
+      { rootMargin: '120px 0px 120px 0px', threshold: 0 }
+    );
 
     bindTargets();
     const timer = setTimeout(bindTargets, 120);
@@ -227,25 +242,24 @@ export default function PointerFX() {
       heroObserver.observe(heroEl);
     }
 
-    // Subtle vertical scroll parallax (--img-py) on project gallery artwork images
+    // Subtle vertical scroll parallax (--img-py) on visible artwork images only (0 dropped frames)
     let scrollRaf = 0;
     const updateParallax = () => {
       scrollRaf = 0;
-      if (document.hidden || reduceMotion || parallaxSlots.length === 0) return;
+      if (document.hidden || reduceMotion || visibleSlots.size === 0) return;
       const vh = window.innerHeight || 800;
-      for (let i = 0; i < parallaxSlots.length; i += 1) {
-        const ti = parallaxSlots[i];
+      visibleSlots.forEach((ti) => {
         const r = ti.getBoundingClientRect();
-        if (r.bottom < -60 || r.top > vh + 60) continue;
+        if (r.bottom < -60 || r.top > vh + 60) return;
         const centerOffset = (r.top + r.height * 0.5 - vh * 0.5) / (vh * 0.6);
         const clamped = Math.max(-1, Math.min(1, centerOffset));
         const py = (clamped * -10).toFixed(2);
         ti.style.setProperty('--img-py', `${py}px`);
-      }
+      });
     };
 
     const onScrollParallax = () => {
-      if (!scrollRaf && !document.hidden && !reduceMotion && parallaxSlots.length > 0) {
+      if (!scrollRaf && !document.hidden && !reduceMotion && visibleSlots.size > 0) {
         scrollRaf = requestAnimationFrame(updateParallax);
       }
     };
@@ -268,6 +282,7 @@ export default function PointerFX() {
       if (scrollRaf) cancelAnimationFrame(scrollRaf);
       window.removeEventListener('scroll', onScrollParallax);
       clipObserver.disconnect();
+      slotObserver.disconnect();
       mo.disconnect();
       if (heroObserver) heroObserver.disconnect();
       document.removeEventListener('visibilitychange', onVis);

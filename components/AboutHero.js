@@ -163,8 +163,8 @@ export default function AboutHero() {
                     alt={tx(site.name)}
                     width={900}
                     height={1200}
-                    sizes="(max-width: 680px) 300px, 400px"
-                    quality={90}
+                    sizes="(max-width: 680px) 280px, 380px"
+                    quality={78}
                     priority
                     style={{
                       width: '100%',

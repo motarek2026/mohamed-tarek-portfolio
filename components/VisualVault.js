@@ -2,7 +2,9 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { BLUR_DATA_URL } from '@/lib/imageHelpers';
 
 /**
  * Visual Vault — a draggable, inertial strip of real artwork pulled from
@@ -39,9 +41,12 @@ export default function VisualVault() {
   const scrollByStep = (dir) => {
     const el = trackRef.current;
     if (!el) return;
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const step = Math.max(280, Math.round(el.clientWidth * 0.65));
     const delta = (isAr ? -dir : dir) * step;
-    el.scrollBy({ left: delta, behavior: 'smooth' });
+    el.scrollBy({ left: delta, behavior: reduce ? 'auto' : 'smooth' });
   };
 
   const handleKeyDown = (e) => {
@@ -186,16 +191,30 @@ export default function VisualVault() {
             draggable={false}
           >
             <span className="vault-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={it.src}
-                alt={it.alt}
-                width={640}
-                height={800}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-              />
+              {it.src && it.src.startsWith('/') ? (
+                <Image
+                  src={it.src}
+                  alt={it.alt}
+                  width={640}
+                  height={800}
+                  sizes="(max-width: 768px) 62vw, 320px"
+                  quality={76}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
+                  draggable={false}
+                />
+              ) : (
+                <img
+                  src={it.src}
+                  alt={it.alt}
+                  width={640}
+                  height={800}
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                />
+              )}
             </span>
             <span className="vault-cap">
               <b>{it.title}</b>

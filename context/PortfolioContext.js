@@ -300,8 +300,11 @@ export function PortfolioProvider({
   // Hydrate preferences & IndexedDB state
   useEffect(() => {
     try {
+      const urlLang = new URLSearchParams(window.location.search || '').get('lang');
       const savedLang = localStorage.getItem('mt_lang');
-      if (savedLang === 'ar' || savedLang === 'en') {
+      if (urlLang === 'ar' || urlLang === 'en') {
+        setLangState(urlLang);
+      } else if (savedLang === 'ar' || savedLang === 'en') {
         setLangState(savedLang);
       } else if (/^ar/i.test(navigator.language || '')) {
         setLangState('ar');
@@ -550,6 +553,22 @@ export function PortfolioProvider({
       projectIndex: -1,
       imageIndex: 0,
       items: [{ k: 0, src, alt: title }],
+      title,
+      videoSrc: null
+    });
+  }, []);
+
+  const openGalleryLightbox = useCallback((items = [], startIndex = 0, title = '') => {
+    const valid = (items || [])
+      .filter((it) => it && it.src)
+      .map((it, idx) => ({ k: idx, src: it.src, alt: it.alt || title }));
+    if (!valid.length) return;
+    const safeIdx = Math.max(0, Math.min(startIndex, valid.length - 1));
+    setLightbox({
+      isOpen: true,
+      projectIndex: -1,
+      imageIndex: safeIdx,
+      items: valid,
       title,
       videoSrc: null
     });
@@ -814,6 +833,7 @@ export function PortfolioProvider({
       lightbox,
       openProjectLightbox,
       openSingleImageLightbox,
+      openGalleryLightbox,
       openVideoLightbox,
       closeLightbox,
       stepLightbox,
@@ -852,6 +872,7 @@ export function PortfolioProvider({
       lightbox,
       openProjectLightbox,
       openSingleImageLightbox,
+      openGalleryLightbox,
       openVideoLightbox,
       closeLightbox,
       stepLightbox,

@@ -2,21 +2,30 @@ import React from 'react';
 import CreativeLabView from '@/components/CreativeLabView';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import {
+  SITE_NAME,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_DESCRIPTOR,
+  buildAlternates
+} from '@/lib/seo';
 
 export const metadata = {
   title: 'Creative Lab — Video & Motion',
   description:
     'Short edits and motion for reels, ads and product launches by Mohamed Tarek — Graphic Designer & UI/UX Designer.',
+  alternates: buildAlternates('/creative-lab'),
   openGraph: {
     title: 'Creative Lab — Mohamed Tarek · Portfolio 2026',
     description:
       'Short edits and motion for reels, ads and product launches by Mohamed Tarek.',
+    url: '/creative-lab',
     type: 'website',
+    locale: 'en_US',
+    alternateLocale: ['ar_EG'],
+    siteName: SITE_NAME,
     images: [
       {
-        url: '/projects/iphone-18-pro-max/01.jpg',
-        width: 1092,
-        height: 1440,
+        ...DEFAULT_OG_IMAGE_DESCRIPTOR,
         alt: 'Creative Lab — Mohamed Tarek · Portfolio 2026'
       }
     ]
@@ -26,7 +35,7 @@ export const metadata = {
     title: 'Creative Lab — Mohamed Tarek · Portfolio 2026',
     description:
       'Short edits and motion for reels, ads and product launches by Mohamed Tarek.',
-    images: ['/projects/iphone-18-pro-max/01.jpg']
+    images: [DEFAULT_OG_IMAGE]
   }
 };
 

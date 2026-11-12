@@ -65,13 +65,13 @@ export default function AmbientEffects() {
 
     observeAll();
     const rafId = requestAnimationFrame(observeAll);
-    let moTimer = 0;
+    let moTimer = null;
     const mo = new MutationObserver(() => {
       if (!moTimer) {
-        moTimer = requestAnimationFrame(() => {
-          moTimer = 0;
+        moTimer = setTimeout(() => {
+          moTimer = null;
           observeAll();
-        });
+        }, 120);
       }
     });
     const mainTarget = document.getElementById('app') || document.getElementById('folder-main') || document.body;
@@ -79,7 +79,7 @@ export default function AmbientEffects() {
 
     return () => {
       cancelAnimationFrame(rafId);
-      if (moTimer) cancelAnimationFrame(moTimer);
+      if (moTimer) clearTimeout(moTimer);
       if (io) io.disconnect();
       mo.disconnect();
     };

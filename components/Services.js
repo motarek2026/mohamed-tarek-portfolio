@@ -97,7 +97,8 @@ const SERVICE_ICONS = {
 
 export default function Services() {
   const { site, projects, tx, t, lang, editing, updateSiteField, waLink } = usePortfolio();
-  const list = site.services || [];
+  const rawList = site.services || [];
+  const list = editing ? rawList : rawList.filter((s) => s.enabled !== false);
   if (!list.length && !editing) return null;
 
   const talkUrl = waLink() || '#contact';

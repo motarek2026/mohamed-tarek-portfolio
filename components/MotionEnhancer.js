@@ -160,26 +160,45 @@ export default function MotionEnhancer() {
     }
 
     // Marquee speed follows scroll velocity and automatically sleeps when velocity decays to 1x
+    // Targets marquee tracks directly instead of calling document.getAnimations() on the entire DOM
     let raf = 0;
     let rate = 1;
+    let cachedMarqAnims = null;
+    let cacheTimer = 0;
+
+    const getMarqAnims = () => {
+      if (cachedMarqAnims) return cachedMarqAnims;
+      const tracks = document.querySelectorAll('.marq .track');
+      const anims = [];
+      tracks.forEach((tr) => {
+        if (typeof tr.getAnimations === 'function') {
+          tr.getAnimations().forEach((a) => anims.push(a));
+        }
+      });
+      cachedMarqAnims = anims;
+      return anims;
+    };
+
     const tick = () => {
       raf = 0;
       if (document.hidden) return;
       const lenis = window.__lenis;
       const v = lenis ? Math.abs(lenis.velocity || 0) : 0;
       const target = 1 + Math.min(v * 0.35, 5);
-      rate += (target - rate) * 0.1;
+      rate += (target - rate) * 0.12;
 
+      const anims = getMarqAnims();
       if (Math.abs(rate - 1) > 0.015 || target > 1.01) {
-        document.getAnimations().forEach((a) => {
-          if (a.animationName === 'marq') a.playbackRate = rate;
+        anims.forEach((a) => {
+          a.playbackRate = rate;
         });
         raf = requestAnimationFrame(tick);
       } else if (rate !== 1) {
         rate = 1;
-        document.getAnimations().forEach((a) => {
-          if (a.animationName === 'marq') a.playbackRate = 1;
+        anims.forEach((a) => {
+          a.playbackRate = 1;
         });
+        cachedMarqAnims = null; // refresh cache when returning to idle
       }
     };
 
