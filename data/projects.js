@@ -1,4 +1,6 @@
-export const INITIAL_PROJECTS = [
+import { PROJECT_SLOTS } from './projectSlots.js';
+
+const EXISTING_PROJECTS = [
   {
     id: 'iphone-18-pro-max',
     slug: 'iphone-18-pro-max',
@@ -404,7 +406,7 @@ export const INITIAL_PROJECTS = [
   {
     id: 'starville',
     slug: 'starville',
-    folderId: 'product-advertising',
+    folderId: 'social-media-campaigns',
     type: 'social',
     projectType: 'concept',
     sub: '',
@@ -799,6 +801,10 @@ export const INITIAL_PROJECTS = [
     ]
   }
 ];
+
+// Every project incl. empty slots. Slots with draft: true stay hidden everywhere (see data/projectSlots.js).
+export const ALL_PROJECTS = [...EXISTING_PROJECTS, ...PROJECT_SLOTS];
+export const INITIAL_PROJECTS = ALL_PROJECTS.filter((p) => !p.draft);
 
 export const PROJECT_COLORS = ['#7C3AED', '#0359D7', '#C026D3', '#4F46E5', '#9333EA', '#2563EB'];
 

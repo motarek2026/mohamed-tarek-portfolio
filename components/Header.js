@@ -194,6 +194,12 @@ export default function Header() {
       href: '/'
     },
     {
+      key: 'about',
+      label: t('about'),
+      sectionId: 'about',
+      href: '/about'
+    },
+    {
       key: 'work',
       label: t('projectsNav'),
       sectionId: 'work',
@@ -204,12 +210,6 @@ export default function Header() {
       label: t('servicesNav'),
       sectionId: 'services',
       href: '/services'
-    },
-    {
-      key: 'about',
-      label: t('about'),
-      sectionId: 'about',
-      href: '/about'
     },
     {
       key: 'pricing',
