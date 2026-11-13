@@ -72,7 +72,11 @@ export default function Contact() {
   const hasWa = socials.some((x) => x.id === 'whatsapp');
   const href = waLink();
 
-  const emailEntry = socials.find((x) => x.id === 'email' && x.value && x.value.trim());
+  const envEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || '';
+  const emailEntry =
+    socials.find((x) => x.id === 'email' && x.value && x.value.trim()) ||
+    (envEmail ? { id: 'email', value: envEmail } : null);
   const emailHref = emailEntry ? socHref('email', emailEntry.value) : '';
 
   const phoneEntry = socials.find((x) => x.id === 'phone' && x.value && x.value.trim());

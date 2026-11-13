@@ -20,6 +20,9 @@ export default function AboutHero() {
     <section className="about-page-hero wrap" id="about-top">
       <div className="blob" aria-hidden="true" />
       <div className="blob b2" aria-hidden="true" />
+      <span className="about-ghost" aria-hidden="true">
+        {t('about')}
+      </span>
 
       {/* Top Breadcrumb + Badge */}
       <div className="about-hero-topbar rv in">
@@ -149,6 +152,8 @@ export default function AboutHero() {
         {/* Editorial Right Column: Portrait Frame with Floating Accents */}
         <div className="about-hero-visual rv in" style={{ '--d': '.12s' }}>
           <div className="about-portrait-stage">
+            <span className="about-portrait-ring" aria-hidden="true" />
+            <span className="about-portrait-ring r2" aria-hidden="true" />
             <div
               className={`photo about-page-photo ${photo ? 'has' : ''}`}
               data-act="photo"

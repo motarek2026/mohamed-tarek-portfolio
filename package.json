@@ -2,6 +2,7 @@
   "name": "mohamed-tarek-portfolio",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Mohamed Tarek — Graphic Designer & UI/UX Designer Portfolio 2026",
   "scripts": {
     "dev": "next dev",

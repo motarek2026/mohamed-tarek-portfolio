@@ -146,10 +146,13 @@ export default function BriefForm({ isStandalonePage = false }) {
   const phoneSocial = (site.socials || []).find((s) => s.id === 'phone' && s.value?.trim());
   const phoneHref = phoneSocial ? socHref('phone', phoneSocial.value) : '';
 
+  const envContactEmail =
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL || process.env.CONTACT_EMAIL || '';
   const emailSocial = (site.socials || []).find(
     (s) => s.id === 'email' && s.value?.trim() && !/your@email\.com/i.test(s.value)
   );
-  const verifiedEmailHref = emailSocial ? socHref('email', emailSocial.value) : '';
+  const effectiveEmail = emailSocial?.value?.trim() || envContactEmail;
+  const verifiedEmailHref = effectiveEmail ? socHref('email', effectiveEmail) : '';
 
   const toggleService = (svcName) => {
     setSelectedServices((prev) => {
@@ -795,10 +798,10 @@ export default function BriefForm({ isStandalonePage = false }) {
               </button>
 
               {(() => {
-                const emailEntry = (site.socials || []).find(
-                  (s) => s.id === 'email' && s.value && s.value.trim()
-                );
-                const emailHref = emailEntry ? socHref('email', emailEntry.value) : '';
+                const rawEmailVal =
+                  (site.socials || []).find((s) => s.id === 'email' && s.value && s.value.trim())?.value?.trim() ||
+                  envContactEmail;
+                const emailHref = rawEmailVal ? socHref('email', rawEmailVal) : '';
                 if (!emailHref) return null;
                 return (
                   <p className="field-hint" style={{ marginTop: '12px', textAlign: 'center' }}>
@@ -808,7 +811,7 @@ export default function BriefForm({ isStandalonePage = false }) {
                       dir="ltr"
                       style={{ textDecoration: 'underline', fontWeight: 600 }}
                     >
-                      {emailEntry.value.trim()}
+                      {rawEmailVal}
                     </a>
                   </p>
                 );

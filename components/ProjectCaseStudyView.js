@@ -188,13 +188,16 @@ export default function ProjectCaseStudyView({ projectSlug, categorySlug }) {
   const overviewValue = project.overview || project.goal;
   const overviewText = String(tx(overviewValue) || '').trim();
 
-  const challengeText = String(tx(project.challenge) || '').trim();
+  const rawChallenge = String(tx(project.challenge) || '').trim();
+  const isChallengeTodo = /^TODO:/i.test(rawChallenge);
+  const challengeText = editing ? rawChallenge : (isChallengeTodo ? '' : rawChallenge);
 
   const rawApproach = String(tx(project.approach || project.decision) || '').trim();
   const isOldDecisionPlaceholder =
     /^add your design decisions here/i.test(rawApproach) ||
-    /^أضف قرارات التصميم هنا/.test(rawApproach);
-  const approachText = isOldDecisionPlaceholder ? '' : rawApproach;
+    /^أضف قرارات التصميم هنا/.test(rawApproach) ||
+    /^TODO:/i.test(rawApproach);
+  const approachText = isOldDecisionPlaceholder ? (editing ? rawApproach : '') : rawApproach;
 
   // Results / Outcome (only renders when summary or metrics exist)
   const resultsSummary = String(

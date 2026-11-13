@@ -1,6 +1,7 @@
 import React from 'react';
 import AboutHero from '@/components/AboutHero';
 import AboutIntro from '@/components/AboutIntro';
+import AboutFocus from '@/components/AboutFocus';
 import Skills from '@/components/Skills';
 import ExperienceTimeline from '@/components/ExperienceTimeline';
 import AboutCTA from '@/components/AboutCTA';
@@ -49,6 +50,7 @@ export default function AboutPage() {
     <main id="app" className="standalone-about-page">
       <AboutHero />
       <AboutIntro />
+      <AboutFocus />
       <Skills />
       <ExperienceTimeline />
       <AboutCTA />

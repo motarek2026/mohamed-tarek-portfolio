@@ -86,16 +86,10 @@ export default function AboutIntro() {
 
         <div className="about-story-body">
           <EditableText
-            path="site.bio1"
-            value={site.bio1}
-            tag="p"
-            className="about-story-lead"
-          />
-          <EditableText
             path="site.bio2"
             value={site.bio2}
             tag="p"
-            className="about-story-text"
+            className="about-story-lead"
           />
         </div>
       </div>
