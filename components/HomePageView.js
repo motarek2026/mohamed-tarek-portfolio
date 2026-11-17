@@ -14,6 +14,7 @@ const About = dynamic(() => import('@/components/About'));
 const Services = dynamic(() => import('@/components/Services'));
 const Skills = dynamic(() => import('@/components/Skills'));
 const Process = dynamic(() => import('@/components/Process'));
+const ArticlesSection = dynamic(() => import('@/components/ArticlesSection'));
 const Packages = dynamic(() => import('@/components/Packages'));
 const Testimonials = dynamic(() => import('@/components/Testimonials'));
 const Faq = dynamic(() => import('@/components/Faq'));
@@ -54,6 +55,7 @@ export default function HomePageView() {
         </React.Fragment>
       ),
       vault: (key) => <VisualVault key={key} />,
+      articles: (key) => <ArticlesSection key={key} />,
       clients: (key) => <ClientLogos key={key} />,
       about: (key) => <About key={key} />,
       services: (key) => <Services key={key} />,
@@ -102,6 +104,7 @@ export default function HomePageView() {
       <Services key="services" />,
       <Skills key="skills" />,
       <Process key="process" />,
+      <ArticlesSection key="articles" />,
       <Packages key="packages" />,
       <Testimonials key="testimonials" />,
       <Faq key="faq" />,

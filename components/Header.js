@@ -34,6 +34,7 @@ export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === '/';
   const isAbout = pathname === '/about';
+  const isArticles = pathname.startsWith('/articles');
   const isCreativeLab = pathname === '/creative-lab';
   const isServices = pathname === '/services';
   const isPricing = pathname === '/pricing';
@@ -212,6 +213,12 @@ export default function Header() {
       href: '/services'
     },
     {
+      key: 'articles',
+      label: t('articlesNav'),
+      sectionId: 'articles',
+      href: '/articles'
+    },
+    {
       key: 'pricing',
       label: t('pricingNav'),
       sectionId: 'packages',
@@ -244,12 +251,14 @@ export default function Header() {
 
   const isNavItemActive = (item) => {
     if (isAbout) return item.key === 'about';
+    if (isArticles) return item.key === 'articles';
     if (isCreativeLab) return item.key === 'creative-lab' || item.key === 'work';
     if (isServices) return item.key === 'services';
     if (isPricing) return item.key === 'pricing';
     if (pathname.startsWith('/start-project')) return item.key === 'pricing';
     if (pathname.startsWith('/projects')) return item.key === 'work';
     if (item.key === 'home') return activeSection === '#top' || activeSection === '';
+    if (item.key === 'articles') return activeSection === '#articles';
     if (item.key === 'services' && (activeSection === '#tools' || activeSection === '#process')) return true;
     if (item.key === 'pricing' && (activeSection === '#faq' || activeSection === '#contact')) return true;
     return activeSection === `#${item.sectionId}`;
@@ -264,6 +273,7 @@ export default function Header() {
       item.key === 'about' ||
       item.key === 'creative-lab' ||
       item.key === 'services' ||
+      item.key === 'articles' ||
       item.key === 'pricing' ||
       item.key === 'work'
     ) {

@@ -45,8 +45,6 @@ export default function BriefForm({ isStandalonePage = false }) {
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
   const [selectedServices, setSelectedServices] = useState([]);
-  const [timeline, setTimeline] = useState('');
-  const [budget, setBudget] = useState('');
   const [referenceLinks, setReferenceLinks] = useState('');
   const [preferredContact, setPreferredContact] = useState('whatsapp');
   const [details, setDetails] = useState('');
@@ -61,7 +59,6 @@ export default function BriefForm({ isStandalonePage = false }) {
   const emailRef = useRef(null);
   const companyRef = useRef(null);
   const servicesGroupRef = useRef(null);
-  const budgetRef = useRef(null);
   const refsRef = useRef(null);
   const detailsRef = useRef(null);
   const handoffRef = useRef(null);
@@ -141,7 +138,6 @@ export default function BriefForm({ isStandalonePage = false }) {
     .concat([t('other')]);
 
   const packages = site.packages || [];
-  const timelines = ['whenAsap', 'when2', 'when4', 'whenFlex'];
 
   const phoneSocial = (site.socials || []).find((s) => s.id === 'phone' && s.value?.trim());
   const phoneHref = phoneSocial ? socHref('phone', phoneSocial.value) : '';
@@ -172,7 +168,6 @@ export default function BriefForm({ isStandalonePage = false }) {
     const trimmedEmail = email.trim();
     const trimmedCompany = company.trim();
     const trimmedDetails = details.trim();
-    const trimmedBudget = budget.trim();
     const trimmedRefs = referenceLinks.trim();
 
     if (trimmedName.length < 2) {
@@ -201,10 +196,6 @@ export default function BriefForm({ isStandalonePage = false }) {
 
     if (selectedServices.length === 0 && !hasValidPackage) {
       nextErrors.services = t('errServiceReq');
-    }
-
-    if (trimmedBudget.length > 120) {
-      nextErrors.budget = t('errBudgetMax');
     }
 
     if (trimmedRefs) {
@@ -237,8 +228,6 @@ export default function BriefForm({ isStandalonePage = false }) {
     } else if (errMap.services && servicesGroupRef.current) {
       const firstInput = servicesGroupRef.current.querySelector('input');
       if (firstInput) firstInput.focus();
-    } else if (errMap.budget && budgetRef.current) {
-      budgetRef.current.focus();
     } else if (errMap.referenceLinks && refsRef.current) {
       refsRef.current.focus();
     } else if (errMap.details && detailsRef.current) {
@@ -288,12 +277,6 @@ export default function BriefForm({ isStandalonePage = false }) {
         t('bNeed').replace('{list}', selectedServices.join(lang === 'ar' ? '، ' : ', '))
       );
     }
-    if (timeline) {
-      lines.push(t('bWhen').replace('{x}', timeline));
-    }
-    if (budget.trim()) {
-      lines.push(t('bBudget').replace('{x}', budget.trim()));
-    }
     if (referenceLinks.trim()) {
       lines.push(t('bRefs').replace('{x}', referenceLinks.trim()));
     }
@@ -329,8 +312,6 @@ export default function BriefForm({ isStandalonePage = false }) {
           preferred_contact: preferredContact,
           services: selectedServices,
           package_name: pkgValue,
-          timeline,
-          budget: budget.trim(),
           message: details.trim(),
           reference_links: referenceLinks
             ? referenceLinks
@@ -643,56 +624,6 @@ export default function BriefForm({ isStandalonePage = false }) {
                     <span id="inq-services-err" className="field-error" role="alert">
                       <AlertCircle size={14} aria-hidden="true" />
                       <span>{errors.services}</span>
-                    </span>
-                  )}
-                </div>
-
-                <div className="bg">
-                  <span className="bl inq-label-row">
-                    <span>{t('fldWhen')}</span>
-                    <small className="opt-tag">{t('optBadge')}</small>
-                  </span>
-                  <div className="bchips" role="radiogroup" aria-label={t('fldWhen')}>
-                    {timelines.map((w) => {
-                      const label = t(w);
-                      return (
-                        <label key={w} className="bchip">
-                          <input
-                            type="radio"
-                            name="when"
-                            checked={timeline === label}
-                            onChange={() => setTimeline(label)}
-                          />
-                          <span>{label}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="bf">
-                  <label htmlFor="inq-budget" className="inq-label-row">
-                    <span>{t('fldBudget')}</span>
-                    <small className="opt-tag">{t('optBadge')}</small>
-                  </label>
-                  <input
-                    ref={budgetRef}
-                    id="inq-budget"
-                    name="budget"
-                    type="text"
-                    maxLength={120}
-                    aria-invalid={!!errors.budget}
-                    aria-describedby={errors.budget ? 'inq-budget-err' : undefined}
-                    value={budget}
-                    onChange={(e) => {
-                      setBudget(e.target.value);
-                      if (errors.budget) setErrors((prev) => ({ ...prev, budget: undefined }));
-                    }}
-                  />
-                  {errors.budget && (
-                    <span id="inq-budget-err" className="field-error" role="alert">
-                      <AlertCircle size={14} aria-hidden="true" />
-                      <span>{errors.budget}</span>
                     </span>
                   )}
                 </div>

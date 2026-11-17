@@ -79,6 +79,10 @@ export const INITIAL_SITE_DATA = {
       value: 'https://www.tiktok.com/@mo.tarek.99'
     },
     {
+      id: 'pinterest',
+      value: 'https://www.pinterest.com/mohamedtarek115'
+    },
+    {
       id: 'linkedin',
       value: ''
     },
@@ -235,8 +239,8 @@ export const INITIAL_SITE_DATA = {
     {
       q: { en: 'What do you need from me?', ar: 'إيه اللي محتاجه مني؟' },
       a: {
-        en: 'Your goals, your audience, any brand assets you already have (logo, colours, references) and your deadline.',
-        ar: 'أهدافك وجمهورك وأي مواد عندك للبراند (لوجو وألوان ومراجع) والموعد اللي محتاجه.'
+        en: 'Your goals, your audience, and any brand assets you already have (logo, colours, references).',
+        ar: 'أهدافك وجمهورك وأي مواد عندك للبراند (لوجو وألوان ومراجع).'
       }
     },
     {

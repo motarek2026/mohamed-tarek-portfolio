@@ -1,6 +1,7 @@
 import { getCategories, getProjects } from '@/lib/content';
 import { getActiveCategories } from '@/lib/categoryHelpers';
 import { SITE_URL, withLangQuery } from '@/lib/seo';
+import { ARTICLES } from '@/data/articlesData';
 
 function buildSitemapEntry(route, now, { changeFrequency, priority }) {
   const normalized = route === '' ? '/' : route;
@@ -32,12 +33,20 @@ export default async function sitemap() {
     '/about',
     '/creative-lab',
     '/services',
+    '/articles',
     '/pricing',
     '/start-project'
   ].map((route) =>
     buildSitemapEntry(route, now, {
       changeFrequency: route === '' ? 'weekly' : 'monthly',
       priority: route === '' ? 1.0 : 0.8
+    })
+  );
+
+  const articleRoutes = ARTICLES.map((article) =>
+    buildSitemapEntry(`/articles/${article.slug}`, now, {
+      changeFrequency: 'monthly',
+      priority: 0.7
     })
   );
 
@@ -56,5 +65,5 @@ export default async function sitemap() {
     })
   );
 
-  return [...staticRoutes, ...categoryRoutes, ...projectRoutes];
+  return [...staticRoutes, ...articleRoutes, ...categoryRoutes, ...projectRoutes];
 }
